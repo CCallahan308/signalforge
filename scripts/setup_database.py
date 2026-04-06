@@ -46,7 +46,7 @@ class DatabaseSetup:
                 password=self.password,
                 database="postgres"
             )
-            self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMAND)
+            self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             logger.success(f"Connected to PostgreSQL at {self.host}:{self.port}")
             return True
         except psycopg2.OperationalError as e:
@@ -72,7 +72,7 @@ class DatabaseSetup:
         
         cursor.close()
     
-    def create_user(self):
+    def create_user(self, user_password: str = None):
         """Create signalforge user if it doesn't exist."""
         cursor = self.conn.cursor()
         
@@ -86,9 +86,10 @@ class DatabaseSetup:
             logger.info("User 'signalforge_user' already exists")
         else:
             logger.info("Creating user 'signalforge_user'...")
-            password = getpass.getpass("Password for signalforge_user: ")
+            # Use provided password or default
+            password = user_password or "SignalForge2024!"
             cursor.execute(f"CREATE USER signalforge_user WITH PASSWORD '{password}'")
-            logger.success("Created user 'signalforge_user'")
+            logger.success(f"Created user 'signalforge_user' (password: {password})")
         
         cursor.close()
     
