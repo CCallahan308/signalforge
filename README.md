@@ -10,7 +10,7 @@ This isn't a tutorial project. It's me figuring out how to build end-to-end ML s
 
 ## Why This Project
 
-I built this to demonstrate what I can actually do, not just what I've studied. The goal is to land a senior data scientist role ($200k+), so I wanted to show:
+I built this to demonstrate what I can actually do, not just what I've studied. I wanted to show:
 
 - I can build real data pipelines (PostgreSQL, ETL, data quality)
 - I know feature engineering (58 features, learned weights)
