@@ -1,0 +1,78 @@
+# SignalForge Production Dependencies
+# Python 3.11+
+
+# Core
+numpy==1.26.4
+pandas==2.2.0
+scipy==1.12.0
+
+# ML & Modeling
+scikit-learn==1.4.0
+xgboost==2.0.3
+lightgbm==4.3.0
+imbalanced-learn==0.12.0
+causalml==0.15.1
+econml==0.15.0
+
+# MLOps
+mlflow==2.10.0
+evidently==0.4.0
+great-expectations==0.18.8
+feast==0.38.0
+bentoml==1.2.0
+
+# Data Engineering
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+alembic==1.13.1
+dbt-core==1.7.4
+dbt-postgres==1.7.4
+
+# API & Web
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+streamlit==1.30.0
+plotly==5.18.0
+
+# Orchestration
+apache-airflow==2.8.1
+prefect==2.14.18
+
+# Monitoring
+grafana-api==1.0.3
+prometheus-client==0.19.0
+
+# Testing
+pytest==7.4.4
+pytest-cov==4.1.0
+pytest-asyncio==0.23.3
+hypothesis==6.97.4
+
+# Dev Tools
+black==24.1.1
+isort==5.13.2
+flake8==7.0.0
+mypy==1.8.0
+pre-commit==3.6.0
+
+# Utilities
+python-dotenv==1.0.0
+pyyaml==6.0.1
+tqdm==4.66.1
+loguru==0.7.2
+rich==13.7.0
+
+# Visualization
+matplotlib==3.8.2
+seaborn==0.13.2
+altair==5.2.0
+
+# Async
+httpx==0.26.0
+aiofiles==23.2.1
+
+# Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
