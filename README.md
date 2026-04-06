@@ -2,7 +2,7 @@
 
 Production ML system for predicting customer churn with statistical rigor.
 
-**[Live Dashboard →](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub Repo →](https://github.com/CCallahan308/signalforge)**
+**[Live Dashboard →](https://signalforge-ccallahan308.streamlit.app/)** • **[Project Page →](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub Repo →](https://github.com/CCallahan308/signalforge)**
 
 Built by Christian (Red) - dual Master's candidate (MBA + MS Data Science) learning how to build real ML systems.
 
