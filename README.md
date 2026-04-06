@@ -200,17 +200,6 @@ signalforge/
 - Time management is everything when you're working + studying
 - Admitting mistakes shows growth mindset
 
-Full reflections in [LEARNING.md](LEARNING.md).
-
-## Resume-Ready Bullets
-
-"Built production churn prediction system achieving 0.850 ± 0.013 AUC with 5-fold cross-validation, statistically significantly outperforming Random Forest (p=0.0074) and Gradient Boosting (p=0.0004)"
-
-"Engineered 58 production-grade features with learned weights via Ridge regression with L2 regularization, replacing arbitrary feature combinations with data-driven optimization"
-
-"Implemented bootstrap confidence intervals (1000 samples), statistical tests (paired t-tests, Wilcoxon), and calibration analysis (Brier score, ECE) demonstrating rigorous quantitative methods"
-
-"Developed end-to-end ML pipeline from data ingestion to feature engineering to interactive dashboard, identifying $1.67M annual revenue at risk with 1.21x-1.81x expected ROI"
 
 ## Tech Stack
 
@@ -242,29 +231,7 @@ Christian G Callahan (Red)
 
 MIT License - see [LICENSE](LICENSE)
 
-## Project Stats
-
-- Commits: 14+
-- Files: 40+
-- Lines of code: ~10,000
-- Documentation: 15+ files
-- Time invested: ~7 hours
-- Features: 58
-- Revenue at risk identified: $1.67M/year
-- Model AUC: 0.850 ± 0.013
-
 ## Statistical Rigor
-
-This is what separates real ML work from tutorial projects:
-
-**Most portfolio projects:**
-- Single train/test split
-- No confidence intervals
-- "Best model" claims without statistical evidence
-- Hard-coded feature weights
-- No calibration analysis
-
-**This project:**
 - 5-fold cross-validation
 - Bootstrap 95% confidence intervals (1000 samples)
 - Statistical significance tests with p-values
