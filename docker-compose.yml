@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:18-alpine
+    container_name: signalforge-db
+    environment:
+      POSTGRES_DB: signalforge
+      POSTGRES_USER: signalforge_user
+      POSTGRES_PASSWORD: SignalForge2024!
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U signalforge_user -d signalforge"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Streamlit Dashboard
+  dashboard:
+    build: .
+    container_name: signalforge-dashboard
+    command: streamlit run src/app/dashboard.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - DATABASE_URL=postgresql://signalforge_user:SignalForge2024!@db:5432/signalforge
+    depends_on:
+      - db
+
+  # FastAPI Backend (when implemented)
+  api:
+    build: .
+    container_name: signalforge-api
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - DATABASE_URL=postgresql://signalforge_user:SignalForge2024!@db:5432/signalforge
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: signalforge-network
