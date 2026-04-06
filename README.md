@@ -204,7 +204,6 @@ Full reflections in [LEARNING.md](LEARNING.md).
 
 Christian G Callahan (Red)
 
-- Email: contact@christiangcallahan.tech
 - LinkedIn: https://www.linkedin.com/in/christian--callahan/
 - GitHub: @CCallahan308
 - Website: https://www.christiangcallahan.tech/
