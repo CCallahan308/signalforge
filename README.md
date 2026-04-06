@@ -2,6 +2,8 @@
 
 Production ML system for predicting customer churn with statistical rigor.
 
+**[Live Dashboard →](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub Repo →](https://github.com/CCallahan308/signalforge)**
+
 Built by Christian (Red) - dual Master's candidate (MBA + MS Data Science) learning how to build real ML systems.
 
 This isn't a tutorial project. It's me figuring out how to build end-to-end ML systems the right way, with proper statistical rigor, while working full-time and going to grad school.
@@ -15,6 +17,31 @@ I built this to demonstrate what I can actually do, not just what I've studied. 
 - I understand model selection (with proper statistical tests)
 - I can quantify business impact (not just show off AUC scores)
 - I write production-ready code (Docker, documentation, maintainable)
+
+## Real Data (Not Synthetic)
+
+This project uses the **IBM Telco Customer Churn dataset** from Kaggle:
+
+**Why this dataset?**
+- **7,043 real customers** - not synthetic data
+- **Real business scenario** - telecom company trying to reduce churn
+- **Messy data** - missing values, categorical variables, imbalanced classes
+- **Real constraints** - budget limitations, intervention costs, ROI requirements
+
+**What I did with it:**
+1. Downloaded from Kaggle using their API (authentic workflow)
+2. Loaded into PostgreSQL for realistic data engineering
+3. Built 58 features from 21 original columns
+4. Used Ridge regression to learn feature weights (not hard-coded guesses)
+5. Quantified business impact with real revenue numbers
+
+**Data pipeline:**
+```
+Kaggle API → Raw CSV (7,043 rows) → PostgreSQL (17 tables, 4 schemas) 
+→ Feature Engineering (58 features) → Model Training → Dashboard
+```
+
+This isn't a toy dataset. It's real customer data with real business constraints.
 
 ## Results
 
