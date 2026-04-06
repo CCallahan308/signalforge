@@ -1,0 +1,11 @@
+customer_id,churned,churn_risk_score,contract_type,tenure_months,monthly_charges,total_charges
+001,1,0.85,Month-to-month,12,70.35,844.20
+002,0,0.25,One year,24,65.50,1572.00
+003,1,0.92,Month-to-month,6,89.10,534.60
+004,0,0.31,Two year,48,55.20,2649.60
+005,0,0.18,Two year,36,49.85,1794.60
+006,1,0.78,Month-to-month,9,75.90,683.10
+007,0,0.22,One year,18,60.45,1088.10
+008,0,0.35,One year,30,68.25,2047.50
+009,1,0.88,Month-to-month,3,95.50,286.50
+010,0,0.28,Two year,60,52.10,3126.00
