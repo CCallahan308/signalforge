@@ -1,3 +1,5 @@
+# Streamlit App Configuration for Faster Deployment
+
 [theme]
 primaryColor = "#1f77b4"
 backgroundColor = "#ffffff"
@@ -7,11 +9,13 @@ font = "sans serif"
 
 [server]
 port = 8501
-address = "localhost"
 headless = true
-runOnSave = true
+runOnSave = false
+maxUploadSize = 200
 
 [browser]
 gatherUsageStats = false
-serverAddress = "localhost"
-serverPort = 8501
+
+[client]
+showErrorDetails = true
+toolbarMode = "minimal"
