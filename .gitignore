@@ -47,6 +47,11 @@ data/external/
 *.db
 *.sqlite
 
+# BUT allow specific demo data files
+!data/raw/WA_Fn_UseC_Telco_Customer_Churn.csv
+!data/processed/features.parquet
+!data/processed/features.csv
+
 # Models
 models/artifacts/*.pkl
 models/artifacts/*.joblib
