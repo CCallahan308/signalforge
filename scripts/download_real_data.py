@@ -165,6 +165,9 @@ class RealDataIngestion:
         # Convert target to binary
         df['churned'] = (df['churn_label'] == 'Yes').astype(int)
         
+        # Convert TotalCharges to numeric (handle empty strings)
+        df['total_revenue'] = pd.to_numeric(df['total_revenue'], errors='coerce')
+        
         # Feature engineering
         df['avg_monthly_charge'] = df['total_revenue'] / (df['account_age_months'] + 1)
         df['charge_trend'] = df['mrr'] - df['avg_monthly_charge']
