@@ -4,16 +4,6 @@ Production ML system for predicting customer churn with statistical rigor.
 
 **[Live Dashboard →](https://signalforge-ccallahan308.streamlit.app/)** • **[Project Page →](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub Repo →](https://github.com/CCallahan308/signalforge)**
 
-## Why This Project
-
-I built this to demonstrate what I can actually do, not just what I've studied. I wanted to show:
-
-- I can build real data pipelines (PostgreSQL, ETL, data quality)
-- I know feature engineering (58 features, learned weights)
-- I understand model selection (with proper statistical tests)
-- I can quantify business impact (not just show off AUC scores)
-- I write production-ready code (Docker, documentation, maintainable)
-
 ## Real Data (Not Synthetic)
 
 This project uses the **IBM Telco Customer Churn dataset** from Kaggle:
@@ -23,13 +13,6 @@ This project uses the **IBM Telco Customer Churn dataset** from Kaggle:
 - **Real business scenario** - telecom company trying to reduce churn
 - **Messy data** - missing values, categorical variables, imbalanced classes
 - **Real constraints** - budget limitations, intervention costs, ROI requirements
-
-**What I did with it:**
-1. Downloaded from Kaggle using their API (authentic workflow)
-2. Loaded into PostgreSQL for realistic data engineering
-3. Built 58 features from 21 original columns
-4. Used Ridge regression to learn feature weights (not hard-coded guesses)
-5. Quantified business impact with real revenue numbers
 
 **Data pipeline:**
 ```
@@ -168,39 +151,6 @@ signalforge/
 ├── docker-compose.yml
 └── requirements.txt
 ```
-
-## Documentation
-
-- [ABOUT.md](ABOUT.md) - Why I built this, my background
-- [LEARNING.md](LEARNING.md) - What I learned, mistakes made
-- [QUICKSTART.md](QUICKSTART.md) - Get started fast
-- [REVIEW.md](REVIEW.md) - Self-assessment
-- [FINAL_COMPREHENSIVE_REVIEW.md](FINAL_COMPREHENSIVE_REVIEW.md) - Complete evaluation
-- [docs/SETUP.md](docs/SETUP.md) - Detailed setup
-- [docs/FEATURES.md](docs/FEATURES.md) - Feature engineering details
-- [docs/MODEL_RESULTS.md](docs/MODEL_RESULTS.md) - Training results
-- [docs/JANE_STREET_REVIEW.md](docs/JANE_STREET_REVIEW.md) - Technical review
-
-## What I Learned
-
-### Technical stuff
-
-1. Feature engineering matters more than algorithm selection. I spent 3 hours on features and beat models I spent 10 hours tuning.
-
-2. Statistical rigor isn't optional if you want to be taken seriously. Single train/test splits, no confidence intervals, claiming "best model" without p-values - that's amateur hour.
-
-3. Production thinking from day one. Not just notebooks - modular code, error handling, logging, documentation.
-
-4. Business metrics > technical metrics. Nobody cares about your AUC if you can't translate it to dollars.
-
-### Process stuff
-
-- Learning in public is scary but builds credibility
-- Authentic voice matters - projects should feel personal
-- Time management is everything when you're working + studying
-- Admitting mistakes shows growth mindset
-
-
 ## Tech Stack
 
 - Python 3.11+
@@ -220,12 +170,6 @@ Christian G Callahan (Red)
 - GitHub: @CCallahan308
 - Website: https://www.christiangcallahan.tech/
 
-## Acknowledgments
-
-- IBM for the Telco Customer Churn dataset
-- Kaggle community for dataset curation
-- scikit-learn and pandas maintainers
-- My professors and grad school peers
 
 ## License
 
