@@ -1,8 +1,8 @@
 {
-  "training_date": "2026-04-08T10:35:05.886018",
+  "training_date": "2026-04-08T11:08:47.545454",
   "dataset": "IBM Telco Customer Churn (Kaggle)",
   "n_customers": 7043,
-  "n_features": 34,
+  "n_features": 54,
   "churn_rate": 0.2654,
   "business_impact": {
     "monthly_revenue": 456116.6,
@@ -11,29 +11,55 @@
   },
   "models": {
     "logistic_regression": {
-      "auc": 0.8416,
-      "f1": 0.6151,
-      "cv_auc_mean": 0.8451,
-      "cv_auc_std": 0.0133,
-      "ci_lower": 0.8212,
-      "ci_upper": 0.8629,
-      "precision": 0.5052,
-      "recall": 0.7861,
-      "brier_score": 0.1688
+      "auc": 0.8483,
+      "cv_auc_mean": 0.8493,
+      "cv_auc_std": 0.0115,
+      "ci_lower": 0.8282,
+      "ci_upper": 0.8686,
+      "f1": 0.6294,
+      "precision": 0.5201,
+      "recall": 0.7968,
+      "brier_score": 0.1651,
+      "optuna_params": {
+        "C": 0.033033,
+        "penalty": "l1"
+      },
+      "optuna_best_trial": 0.8493,
+      "optuna_n_trials": 20
     },
     "random_forest": {
-      "auc": 0.8397,
-      "f1": 0.622,
-      "cv_auc_mean": 0.843,
-      "cv_auc_std": 0.0119,
-      "p_value_vs_lr": 0.2525
+      "auc": 0.8451,
+      "cv_auc_mean": 0.8439,
+      "cv_auc_std": 0.0096,
+      "f1": 0.6402,
+      "p_value_vs_lr": 0.0155,
+      "optuna_params": {
+        "n_estimators": 244,
+        "max_depth": 13,
+        "min_samples_split": 7,
+        "min_samples_leaf": 8,
+        "max_features": "log2"
+      },
+      "optuna_best_trial": 0.8439,
+      "optuna_n_trials": 20
     },
     "gradient_boosting": {
-      "auc": 0.8359,
-      "f1": 0.5714,
-      "cv_auc_mean": 0.8368,
-      "cv_auc_std": 0.0105,
-      "p_value_vs_lr": 0.0225
+      "auc": 0.8473,
+      "cv_auc_mean": 0.8464,
+      "cv_auc_std": 0.0097,
+      "f1": 0.5639,
+      "p_value_vs_lr": 0.1304,
+      "optuna_params": {
+        "n_estimators": 255,
+        "max_depth": 4,
+        "learning_rate": 0.010094,
+        "min_samples_split": 2,
+        "min_samples_leaf": 7,
+        "subsample": 0.982999,
+        "max_features": "log2"
+      },
+      "optuna_best_trial": 0.8464,
+      "optuna_n_trials": 20
     }
   },
   "feature_names": [
@@ -41,141 +67,162 @@
     "tenure",
     "MonthlyCharges",
     "TotalCharges",
-    "contract_risk",
-    "payment_risk",
+    "tenure_years",
+    "is_new_customer",
+    "is_very_new",
+    "is_established",
+    "is_long_term",
     "tenure_risk",
-    "churn_risk_score",
-    "gender_Male",
-    "Partner_Yes",
-    "Dependents_Yes",
-    "PhoneService_Yes",
-    "MultipleLines_No phone service",
-    "MultipleLines_Yes",
-    "InternetService_Fiber optic",
-    "InternetService_No",
-    "OnlineSecurity_No internet service",
-    "OnlineSecurity_Yes",
-    "OnlineBackup_No internet service",
-    "OnlineBackup_Yes",
-    "DeviceProtection_No internet service",
-    "DeviceProtection_Yes",
-    "TechSupport_No internet service",
-    "TechSupport_Yes",
-    "StreamingTV_No internet service",
-    "StreamingTV_Yes",
-    "StreamingMovies_No internet service",
-    "StreamingMovies_Yes",
-    "Contract_One year",
-    "Contract_Two year",
-    "PaperlessBilling_Yes",
-    "PaymentMethod_Credit card (automatic)",
-    "PaymentMethod_Electronic check",
-    "PaymentMethod_Mailed check"
+    "tenure_squared",
+    "log_tenure",
+    "is_month_to_month",
+    "is_one_year",
+    "is_two_year",
+    "contract_risk",
+    "is_auto_payment",
+    "is_electronic_check",
+    "is_paperless",
+    "payment_risk",
+    "payment_stability",
+    "service_count",
+    "has_security",
+    "has_tech_support",
+    "has_backup",
+    "has_protection",
+    "has_internet",
+    "is_fiber_optic",
+    "no_internet",
+    "has_phone",
+    "has_multiple_lines",
+    "service_adoption_rate",
+    "no_protection",
+    "no_support",
+    "is_senior",
+    "has_partner",
+    "has_dependents",
+    "is_single",
+    "family_size",
+    "is_male",
+    "avg_monthly_from_total",
+    "charge_trend",
+    "charge_trend_pct",
+    "is_high_charge",
+    "total_revenue_per_month",
+    "lifetime_value",
+    "charge_per_service",
+    "mrr_percentile",
+    "price_sensitivity",
+    "contract_tenure_risk",
+    "payment_service_risk",
+    "value_at_risk",
+    "engagement_score",
+    "churn_risk_score"
   ],
   "feature_weights": [
     {
-      "feature": "MonthlyCharges",
-      "weight": -0.18241625495904132,
-      "abs_weight": 0.18241625495904132
+      "feature": "log_tenure",
+      "weight": -0.22165314839227104,
+      "abs_weight": 0.22165314839227104
     },
     {
-      "feature": "InternetService_Fiber optic",
-      "weight": 0.16679775029997432,
-      "abs_weight": 0.16679775029997432
+      "feature": "lifetime_value",
+      "weight": -0.19681165381975418,
+      "abs_weight": 0.19681165381975418
+    },
+    {
+      "feature": "is_fiber_optic",
+      "weight": 0.186055788242914,
+      "abs_weight": 0.186055788242914
+    },
+    {
+      "feature": "tenure_squared",
+      "weight": -0.16989496348190486,
+      "abs_weight": 0.16989496348190486
+    },
+    {
+      "feature": "MonthlyCharges",
+      "weight": -0.12360269028107544,
+      "abs_weight": 0.12360269028107544
+    },
+    {
+      "feature": "service_count",
+      "weight": 0.11440546054669443,
+      "abs_weight": 0.11440546054669443
+    },
+    {
+      "feature": "service_adoption_rate",
+      "weight": 0.11440546054668647,
+      "abs_weight": 0.11440546054668647
+    },
+    {
+      "feature": "contract_tenure_risk",
+      "weight": 0.11423226585261471,
+      "abs_weight": 0.11423226585261471
+    },
+    {
+      "feature": "tenure_years",
+      "weight": 0.11199976547589294,
+      "abs_weight": 0.11199976547589294
+    },
+    {
+      "feature": "tenure",
+      "weight": 0.11199976547568308,
+      "abs_weight": 0.11199976547568308
+    },
+    {
+      "feature": "tenure_risk",
+      "weight": -0.11199976547511904,
+      "abs_weight": 0.11199976547511904
+    },
+    {
+      "feature": "total_revenue_per_month",
+      "weight": -0.10645591013016441,
+      "abs_weight": 0.10645591013016441
+    },
+    {
+      "feature": "avg_monthly_from_total",
+      "weight": -0.10645591013014526,
+      "abs_weight": 0.10645591013014526
     },
     {
       "feature": "TotalCharges",
-      "weight": -0.11013990348054185,
-      "abs_weight": 0.11013990348054185
+      "weight": 0.10250682495993235,
+      "abs_weight": 0.10250682495993235
     },
     {
-      "feature": "StreamingMovies_Yes",
-      "weight": 0.056499667083821904,
-      "abs_weight": 0.056499667083821904
+      "feature": "value_at_risk",
+      "weight": 0.1017488545249265,
+      "abs_weight": 0.1017488545249265
     },
     {
-      "feature": "StreamingTV_Yes",
-      "weight": 0.05630897210842685,
-      "abs_weight": 0.05630897210842685
+      "feature": "engagement_score",
+      "weight": 0.07185824304596741,
+      "abs_weight": 0.07185824304596741
     },
     {
-      "feature": "MultipleLines_Yes",
-      "weight": 0.04259292119359295,
-      "abs_weight": 0.04259292119359295
-    },
-    {
-      "feature": "Contract_One year",
-      "weight": -0.03065261847648527,
-      "abs_weight": 0.03065261847648527
-    },
-    {
-      "feature": "PaperlessBilling_Yes",
-      "weight": 0.023837068590639984,
-      "abs_weight": 0.023837068590639984
+      "feature": "has_backup",
+      "weight": -0.054322666816075435,
+      "abs_weight": 0.054322666816075435
     },
     {
       "feature": "churn_risk_score",
-      "weight": 0.019330696075867307,
-      "abs_weight": 0.019330696075867307
+      "weight": -0.052006178903049,
+      "abs_weight": 0.052006178903049
     },
     {
-      "feature": "contract_risk",
-      "weight": 0.018391964320152276,
-      "abs_weight": 0.018391964320152276
+      "feature": "charge_trend",
+      "weight": -0.051788858365652814,
+      "abs_weight": 0.051788858365652814
     },
     {
-      "feature": "TechSupport_No internet service",
-      "weight": -0.017746770104721036,
-      "abs_weight": 0.017746770104721036
-    },
-    {
-      "feature": "DeviceProtection_No internet service",
-      "weight": -0.017746770104721032,
-      "abs_weight": 0.017746770104721032
-    },
-    {
-      "feature": "OnlineSecurity_No internet service",
-      "weight": -0.017746770104702037,
-      "abs_weight": 0.017746770104702037
-    },
-    {
-      "feature": "OnlineBackup_No internet service",
-      "weight": -0.01774677010469612,
-      "abs_weight": 0.01774677010469612
-    },
-    {
-      "feature": "StreamingMovies_No internet service",
-      "weight": -0.01774677010464246,
-      "abs_weight": 0.01774677010464246
-    },
-    {
-      "feature": "StreamingTV_No internet service",
-      "weight": -0.017746770104642453,
-      "abs_weight": 0.017746770104642453
-    },
-    {
-      "feature": "InternetService_No",
-      "weight": -0.01774677010461703,
-      "abs_weight": 0.01774677010461703
-    },
-    {
-      "feature": "PaymentMethod_Electronic check",
-      "weight": 0.014967413347632305,
-      "abs_weight": 0.014967413347632305
-    },
-    {
-      "feature": "MultipleLines_No phone service",
-      "weight": -0.01428143459602813,
-      "abs_weight": 0.01428143459602813
-    },
-    {
-      "feature": "PhoneService_Yes",
-      "weight": 0.014281434595988893,
-      "abs_weight": 0.014281434595988893
+      "feature": "has_multiple_lines",
+      "weight": 0.05107554840320566,
+      "abs_weight": 0.05107554840320566
     }
   ],
   "validation": {
     "method": "5-fold stratified cross-validation",
+    "hyperparameter_tuning": "Optuna Bayesian optimization (20 trials per model)",
     "bootstrap_ci_samples": 1000,
     "significance_test": "paired t-test"
   }

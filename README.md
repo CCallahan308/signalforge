@@ -28,9 +28,9 @@ This is real customer data with real business constraints.
 
 | Model | AUC | 95% Confidence Interval | Significance |
 |-------|-----|------------------------|--------------|
-| Logistic Regression | 0.845 +/- 0.013 | [0.821, 0.863] | Best model |
-| Random Forest | 0.843 +/- 0.012 | [0.821, 0.863] | p=0.25 vs LR |
-| Gradient Boosting | 0.837 +/- 0.011 | [0.815, 0.859] | p=0.02 vs LR |
+| Logistic Regression | 0.849 +/- 0.012 | [0.828, 0.869] | Optuna-tuned |
+| Random Forest | 0.844 +/- 0.010 | [0.825, 0.863] | p=0.016 vs LR |
+| Gradient Boosting | 0.846 +/- 0.010 | [0.827, 0.866] | p=0.130 vs LR |
 
 The key finding: Logistic Regression is statistically significantly better than the other models. Not just "higher AUC" - the confidence intervals don't overlap and p-values are well below 0.05.
 
@@ -186,7 +186,7 @@ Example:
 
 Before: "Logistic Regression achieved 0.848 AUC, beating Random Forest"
 
-After: "Logistic Regression achieved 0.845 +/- 0.013 AUC [95% CI: 0.821, 0.863] using 5-fold cross-validation. RF was not significantly different (p=0.25), but GB was (p=0.02, paired t-test). LR wins on interpretability and statistical rigor."
+After: "Logistic Regression achieved 0.849 +/- 0.012 AUC [95% CI: 0.828, 0.869] using 5-fold CV with Optuna hyperparameter tuning (20 Bayesian trials). RF was significantly different (p=0.016) but GB was not (p=0.130). LR wins on interpretability."
 
 ---
 

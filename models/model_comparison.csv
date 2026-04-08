@@ -1,4 +1,4 @@
 model,auc,ci_lower,ci_upper,p_value
-Logistic Regression,0.8416,0.8212,0.8629,
-Random Forest,0.8397,0.819676,0.866324,0.2525
-Gradient Boosting,0.8359,0.81622,0.85738,0.0225
+Logistic Regression,0.8483,0.8282,0.8686,
+Random Forest,0.8451,0.8250839999999999,0.862716,0.0155
+Gradient Boosting,0.8473,0.827388,0.8654120000000001,0.1304
