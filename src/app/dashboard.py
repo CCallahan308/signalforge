@@ -394,8 +394,8 @@ def main():
     st.markdown("""
     <div style='text-align: center'>
         <p><strong>SignalForge</strong> - Built with 💼 by Christian G Callahan</p>
-        <p>MS Data Science Candidate | <a href='https://github.com/CCallahan308/signalforge'>GitHub</a> | <a href='https://www.christiangcallahan.tech/'>Portfolio</a></p>
-        <p><em>This is a learning project - I'm a grad student building my first production ML system.</em></p>
+        <p><a href='https://github.com/CCallahan308/signalforge'>GitHub</a> | <a href='https://www.christiangcallahan.tech/'>Portfolio</a></p>
+        <p><em>This is a learning project - </em></p>
     </div>
     """, unsafe_allow_html=True)
 
