@@ -53,10 +53,12 @@ data/external/
 !data/processed/features.csv
 
 # Models
-models/artifacts/*.pkl
 models/artifacts/*.joblib
 models/artifacts/*.onnx
 models/checkpoints/
+
+# BUT allow trained model .pkl files for validation
+!models/artifacts/*.pkl
 
 # Logs
 logs/*.log
