@@ -53,7 +53,7 @@ class AdvancedModelAnalysis:
     
     Improvements over basic training:
     1. Bootstrap confidence intervals on all metrics
-    2. Cross-validation for robust estimates
+    2. Cross-validation for reliable estimates
     3. Statistical tests for model comparison
     4. Calibration analysis
     5. Learn feature weights instead of hard-coding

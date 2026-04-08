@@ -254,7 +254,7 @@ Christian shows feature importance (coefficients for logistic regression, featur
 
 **Jane Street Standard:**
 
-We'd expect deep model introspection. Not just "this feature is important" but "this feature is important because..." and "here's how predictions change when this feature changes."
+We'd expect deep model introspection. Going beyond "this feature is important" to "this feature is important because..." and "here's how predictions change when this feature changes."
 
 ### 7. No Alternative Approaches Considered (B)
 
@@ -521,7 +521,7 @@ Christian has solid fundamentals but would need:
 | **Mathematical Rigor** | Intuition-based | Theory + empirical validation |
 | **Uncertainty Quantification** | None | Prediction intervals, Bayesian |
 | **Alternative Approaches** | 3 models | 10+ approaches with justification |
-| **Edge Case Analysis** | Minimal | Comprehensive |
+| **Edge Case Analysis** | Minimal | Thorough |
 | **Feature Engineering** | Manual, hard-coded | Learned with regularization |
 | **Documentation** | Excellent | Excellent |
 

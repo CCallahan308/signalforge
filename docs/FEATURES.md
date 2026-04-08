@@ -190,7 +190,7 @@ Features that combine multiple signals.
 ✅ **Actionable:** Map to business interventions  
 ✅ **Interpretable:** Explainable to stakeholders  
 ✅ **Non-Leaky:** Don't use future information  
-✅ **Robust:** Handle missing values, outliers  
+✅ **Reliable:** Handle missing values, outliers  
 
 ### Feature Creation Logic
 
