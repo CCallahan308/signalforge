@@ -20,7 +20,7 @@ Kaggle API → Raw CSV (7,043 rows) → PostgreSQL (17 tables, 4 schemas)
 → Feature Engineering (58 features) → Model Training → Dashboard
 ```
 
-This isn't a toy dataset. It's real customer data with real business constraints.
+This is real customer data with real business constraints.
 
 ## Results
 
@@ -190,6 +190,6 @@ After: "Logistic Regression achieved 0.850 ± 0.013 AUC [95% CI: 0.827, 0.870] u
 
 ---
 
-Built by a grad student learning in public. This isn't perfect - it's a work in progress. But that's the point. Real data science is iterative, messy, and constantly improving.
+Built by a grad student learning in public. Real data science is iterative, messy, and constantly improving.
 
 That's what I wanted to show.

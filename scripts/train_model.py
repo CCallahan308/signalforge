@@ -246,7 +246,7 @@ class ChurnModelTrainer:
         Train gradient boosting model (sklearn's version - simpler than XGBoost).
         
         Why gradient boosting?
-        - State-of-the-art performance on tabular data
+        - Top performance on tabular data
         - Handles non-linear relationships
         - Usually beats random forest
         - Industry standard for many problems
