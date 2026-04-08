@@ -1,68 +1,48 @@
 # SignalForge
 
-Production ML system for predicting customer churn with statistical rigor.
+Production churn prediction with statistical rigor.
 
-**[Live Dashboard →](https://signalforge-ccallahan308.streamlit.app/)** • **[Project Page →](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub Repo →](https://github.com/CCallahan308/signalforge)**
+**[Live Dashboard](https://signalforge-ccallahan308.streamlit.app/)** • **[Project Page](https://christiangcallahan.tech/projects/signalforge)** • **[GitHub](https://github.com/CCallahan308/signalforge)**
 
-## Real Data (Not Synthetic)
+## What I Built
 
-This project uses the **IBM Telco Customer Churn dataset** from Kaggle:
-
-**Why this dataset?**
-- **7,043 real customers** - not synthetic data
-- **Real business scenario** - telecom company trying to reduce churn
-- **Messy data** - missing values, categorical variables, imbalanced classes
-- **Real constraints** - budget limitations, intervention costs, ROI requirements
-
-**Data pipeline:**
-```
-Kaggle API → Raw CSV (7,043 rows) → PostgreSQL (17 tables, 4 schemas) 
-→ Feature Engineering (58 features) → Model Training → Dashboard
-```
-
-This is real customer data with real business constraints.
+A churn prediction system for a telecom company (IBM Telco dataset, 7,043 customers) with one goal: make statistically sound decisions about which customers to save and how much to spend doing it.
 
 ## Results
 
-### Model Performance
+### Model Performance (5-fold CV, Optuna-tuned)
 
-| Model | AUC | 95% Confidence Interval | Significance |
-|-------|-----|------------------------|--------------|
-| Logistic Regression | 0.849 +/- 0.012 | [0.828, 0.869] | Optuna-tuned |
-| Random Forest | 0.844 +/- 0.010 | [0.825, 0.863] | p=0.016 vs LR |
-| Gradient Boosting | 0.846 +/- 0.010 | [0.827, 0.866] | p=0.130 vs LR |
+| Model | AUC | 95% CI | vs LR |
+|-------|-----|--------|-------|
+| Logistic Regression | 0.849 ± 0.012 | [0.828, 0.869] | Baseline |
+| Gradient Boosting | 0.846 ± 0.010 | [0.827, 0.866] | p=0.130 |
+| Random Forest | 0.844 ± 0.010 | [0.825, 0.863] | p=0.016 |
 
-The key finding: Logistic Regression is statistically significantly better than the other models. Not just "higher AUC" - the confidence intervals don't overlap and p-values are well below 0.05.
-
-Method: 5-fold stratified cross-validation, 1000-sample bootstrap for confidence intervals, paired t-tests for comparison.
-
-### Calibration Analysis
-
-| Model | Brier Score | ECE | Notes |
-|-------|------------|-----|-------|
-| Gradient Boosting | 0.139 | 0.033 | Best calibrated |
-| Random Forest | 0.147 | 0.081 | Balanced |
-| Logistic Regression | 0.164 | 0.147 | Highest AUC but overconfident |
-
-Trade-off here: LR has the best discrimination (AUC), but GB has better-calibrated probabilities. For this use case, I prioritized AUC.
+Logistic Regression won on discrimination. Gradient Boosting was better calibrated (Brier 0.139 vs 0.164). The right model depends on whether you need ranking or probability accuracy.
 
 ### Business Impact
 
-- Revenue at risk: $139K/month ($1.67M annually)
-- Model identifies: $113K/month (81% of actual churners)
-- Expected ROI: 1.21x - 1.81x (depending on intervention success rate)
-- Potential annual savings: $270K - $405K
+- **$1.67M** annual revenue at risk
+- **$113K/month** identified by model (81% of actual churners)
+- **1.21x–1.81x** expected ROI from retention interventions
+- **$270K–$405K** potential annual savings
 
 ### Features
 
-58 engineered features with learned weights (via Ridge regression, not hard-coded guesses).
+58 engineered features with learned weights via Ridge regression. Top predictor: contract type (month-to-month = 3.8x churn), which turned out to be 2x more important than I initially assumed.
 
-Top predictors:
-- Contract risk: 0.112 weight
-- Payment risk: 0.052 weight
-- Tenure risk: 0.049 weight
+## What I Learned
 
-The contract feature turned out to be 2x more important than I initially thought.
+1. **Feature engineering beats tuning.** The biggest AUC gains came from building good risk features, not from Optuna sweeps.
+2. **Simple models compete.** Logistic Regression beat two ensemble methods. Interpretability was a free bonus.
+3. **Confidence intervals change decisions.** Without CIs, the AUC difference between LR and RF looks meaningful. With them (overlapping), you realize it's borderline.
+4. **Calibration matters for business use.** A model that ranks well but gives garbage probabilities leads to bad ROI estimates.
+
+## What I'd Do Differently
+
+- The dataset is a single snapshot. A temporal dataset with monthly cohorts would be more realistic and allow drift detection.
+- I'd add cost-sensitive learning upfront instead of post-hoc ROI calculations.
+- The dashboard needs pre-computed artifacts, not a live database. I'd restructure for stateless deployment.
 
 ## Quick Start
 
@@ -80,7 +60,7 @@ git clone https://github.com/CCallahan308/signalforge
 cd signalforge
 
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Set up database
@@ -117,7 +97,7 @@ Full deployment guide in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 signalforge/
 ├── data/
 │   ├── raw/                    # From Kaggle
-│   └── processed/              # 84 features
+│   └── processed/              # 54 features
 ├── models/
 │   └── artifacts/              # Trained models
 ├── scripts/
@@ -125,7 +105,7 @@ signalforge/
 │   ├── download_real_data.py
 │   ├── engineer_features.py
 │   ├── train_model.py
-│   ├── advanced_model_analysis.py  # Statistical rigor
+│   ├── advanced_model_analysis.py
 │   └── quick_eda.py
 ├── src/
 │   ├── app/
@@ -151,45 +131,33 @@ signalforge/
 ├── docker-compose.yml
 └── requirements.txt
 ```
+
 ## Tech Stack
 
-- Python 3.11+
-- PostgreSQL 18
+- Python 3.11+ / PostgreSQL 18
 - scikit-learn, pandas, numpy
-- Statistical analysis: Bootstrap CI, CV, significance tests
-- Streamlit, Plotly (visualization)
+- Optuna (hyperparameter tuning)
+- Streamlit, Plotly
 - Docker
-- FastAPI (planned)
-- Evidently AI (planned for monitoring)
+- Statistical analysis: Bootstrap CI, 5-fold CV, significance testing, calibration
+
+## Statistical Methods
+
+- 5-fold stratified cross-validation
+- Bootstrap 95% confidence intervals (1000 samples)
+- Paired t-tests for model comparison
+- Calibration analysis (Brier score, ECE)
+- Optuna Bayesian optimization (20 trials per model)
+- Learned feature weights via Ridge regression (L2)
 
 ## Contact
 
-Christian G Callahan (Red)
+Christian Callahan
 
-- LinkedIn: https://www.linkedin.com/in/christian--callahan/
-- GitHub: @CCallahan308
-- Website: https://www.christiangcallahan.tech/
-
+- [Portfolio](https://christiangcallahan.tech)
+- [LinkedIn](https://www.linkedin.com/in/christian--callahan/)
+- [GitHub](https://github.com/CCallahan308)
 
 ## License
 
 MIT License - see [LICENSE](LICENSE)
-
-## Statistical Rigor
-- 5-fold cross-validation
-- Bootstrap 95% confidence intervals (1000 samples)
-- Statistical significance tests with p-values
-- Learned feature weights via Ridge regression
-- Calibration analysis (Brier score, ECE)
-
-Example:
-
-Before: "Logistic Regression achieved 0.848 AUC, beating Random Forest"
-
-After: "Logistic Regression achieved 0.849 +/- 0.012 AUC [95% CI: 0.828, 0.869] using 5-fold CV with Optuna hyperparameter tuning (20 Bayesian trials). RF was significantly different (p=0.016) but GB was not (p=0.130). LR wins on interpretability."
-
----
-
-Built by a grad student learning in public. Real data science is iterative, messy, and constantly improving.
-
-That's what I wanted to show.
