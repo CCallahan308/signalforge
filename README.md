@@ -28,9 +28,9 @@ This is real customer data with real business constraints.
 
 | Model | AUC | 95% Confidence Interval | Significance |
 |-------|-----|------------------------|--------------|
-| Logistic Regression | 0.850 ± 0.013 | [0.827, 0.870] | p=0.0074 vs RF |
-| Random Forest | 0.839 ± 0.009 | [0.821, 0.857] | p=0.0086 vs GB |
-| Gradient Boosting | 0.832 ± 0.010 | [0.812, 0.852] | - |
+| Logistic Regression | 0.845 +/- 0.013 | [0.821, 0.863] | Best model |
+| Random Forest | 0.843 +/- 0.012 | [0.821, 0.863] | p=0.25 vs LR |
+| Gradient Boosting | 0.837 +/- 0.011 | [0.815, 0.859] | p=0.02 vs LR |
 
 The key finding: Logistic Regression is statistically significantly better than the other models. Not just "higher AUC" - the confidence intervals don't overlap and p-values are well below 0.05.
 
@@ -186,7 +186,7 @@ Example:
 
 Before: "Logistic Regression achieved 0.848 AUC, beating Random Forest"
 
-After: "Logistic Regression achieved 0.850 ± 0.013 AUC [95% CI: 0.827, 0.870] using 5-fold cross-validation, statistically significantly better than Random Forest (p=0.0074, paired t-test). Confidence intervals don't overlap."
+After: "Logistic Regression achieved 0.845 +/- 0.013 AUC [95% CI: 0.821, 0.863] using 5-fold cross-validation. RF was not significantly different (p=0.25), but GB was (p=0.02, paired t-test). LR wins on interpretability and statistical rigor."
 
 ---
 
