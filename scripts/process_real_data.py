@@ -9,9 +9,14 @@ from pathlib import Path
 
 print("Loading ACTUAL IBM Telco Customer Churn dataset...")
 
-# Load the real IBM data
-base_dir = Path(__file__).parent.parent
+# Load the real IBM data (from Kaggle)
+# Get the signalforge directory (where this script's parent is)
+script_dir = Path(__file__).parent
+base_dir = script_dir.parent  # This is the signalforge root directory
 raw_file = base_dir / 'data' / 'raw' / 'WA_Fn_UseC_Telco_Customer_Churn.csv'
+
+print(f'Reading from: {raw_file}')
+print(f'File exists: {raw_file.exists()}')
 
 df = pd.read_csv(raw_file)
 print(f"[OK] Loaded {len(df):,} REAL customer records from IBM")
@@ -55,6 +60,8 @@ processed_dir.mkdir(parents=True, exist_ok=True)
 
 features_csv = processed_dir / 'features.csv'
 features_parquet = processed_dir / 'features.parquet'
+
+print(f'Saving to: {features_parquet}')
 
 df_processed.to_csv(features_csv, index=False)
 df_processed.to_parquet(features_parquet, index=False)
