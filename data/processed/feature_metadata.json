@@ -1,0 +1,18 @@
+{
+  "input_file": "C:\\Users\\Calla\\signalforge\\data\\raw\\WA_Fn_UseC_Telco_Customer_Churn.csv",
+  "output_file": "C:\\Users\\Calla\\signalforge\\data\\processed\\features.parquet",
+  "n_records": 7043,
+  "n_features": 61,
+  "churn_rate": 0.2654,
+  "feature_groups": {
+    "tenure": 8,
+    "contract": 4,
+    "payment": 5,
+    "service": 13,
+    "demographic": 6,
+    "financial": 9,
+    "interaction": 5,
+    "one_hot": 11
+  },
+  "created_at": "2026-04-08T10:49:45.846759"
+}
