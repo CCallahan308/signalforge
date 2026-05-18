@@ -89,7 +89,7 @@ df_models = pd.DataFrame(models_data)
 fig = go.Figure()
 
 for idx, row in df_models.iterrows():
-    color = '#1f77b4' if row['Model'] == 'Logistic Regression' else '#lightgray'
+    color = '#1f77b4' if row['Model'] == 'Logistic Regression' else 'lightgray'
     fig.add_trace(go.Bar(
         name=row['Model'],
         x=[row['Model']],

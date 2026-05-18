@@ -56,12 +56,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+_ROOT = Path(__file__).parent.parent.parent
+
+
 @st.cache_data
 def load_data():
     """Load engineered features and model results."""
     try:
-        features = pd.read_parquet('data/processed/features.parquet')
-        model_comparison = pd.read_csv('models/artifacts/model_comparison.csv')
+        features = pd.read_parquet(_ROOT / 'data' / 'processed' / 'features.parquet')
+        model_comparison = pd.read_csv(_ROOT / 'models' / 'artifacts' / 'model_comparison.csv')
 
         # Add derived columns that the dashboard expects
         if 'account_id' not in features.columns:
@@ -81,7 +84,7 @@ def load_data():
 
         return features, model_comparison
     except FileNotFoundError:
-        st.error("Data not found! Run: python scripts/engineer_features.py && python scripts/train_model.py")
+        st.error("Data not found! Run: python scripts/engineer_real_features.py && python scripts/train_with_optuna.py")
         st.stop()
 
 
