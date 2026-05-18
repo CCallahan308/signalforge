@@ -60,7 +60,7 @@ git clone https://github.com/CCallahan308/signalforge
 cd signalforge
 
 python -m venv venv
-source venv/bin/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Set up database
@@ -155,7 +155,7 @@ signalforge/
 Christian Callahan
 
 - [Portfolio](https://christiangcallahan.tech)
-- [LinkedIn](https://www.linkedin.com/in/christian--callahan/)
+- [LinkedIn](https://www.linkedin.com/in/christiangcallahan/)
 - [GitHub](https://github.com/CCallahan308)
 
 ## License
