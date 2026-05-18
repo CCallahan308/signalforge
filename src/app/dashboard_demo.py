@@ -9,12 +9,10 @@ Run locally: streamlit run src/app/dashboard_demo.py
 Deployed at: https://signalforge-ccallahan308.streamlit.app/
 """
 
-import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from pathlib import Path
+import streamlit as st
 
 # Page config
 st.set_page_config(
@@ -89,7 +87,7 @@ df_models = pd.DataFrame(models_data)
 fig = go.Figure()
 
 for idx, row in df_models.iterrows():
-    color = '#1f77b4' if row['Model'] == 'Logistic Regression' else '#lightgray'
+    color = '#1f77b4' if row['Model'] == 'Logistic Regression' else 'lightgray'
     fig.add_trace(go.Bar(
         name=row['Model'],
         x=[row['Model']],
@@ -140,7 +138,7 @@ with col1:
         value=18,
         step=1
     )
-    
+
 with col2:
     save_rate = st.slider(
         "Expected Save Rate (%)",
@@ -209,11 +207,11 @@ st.header("🧪 Statistical Rigor")
 st.markdown("""
 **What Makes This Different:**
 
-✅ **5-fold stratified cross-validation** - Not just single train/test split  
-✅ **Bootstrap 95% confidence intervals** (1000 samples) - Quantifies uncertainty  
-✅ **Statistical significance testing** (p-values) - Proves model superiority  
-✅ **Learned feature weights** (Ridge regression) - Data-driven, not hard-coded  
-✅ **Calibration analysis** (Brier score, ECE) - Probability accuracy verified  
+✅ **5-fold stratified cross-validation** — not just single train/test split
+✅ **Bootstrap 95% confidence intervals** (1000 samples) — quantifies uncertainty
+✅ **Statistical significance testing** (p-values) — proves model superiority
+✅ **Learned feature weights** (Ridge regression) — data-driven, not hard-coded
+✅ **Calibration analysis** (Brier score, ECE) — probability accuracy verified
 
 **Most portfolio projects skip these steps.** This demonstrates production-grade rigor.
 """)
@@ -223,9 +221,8 @@ st.markdown("---")
 st.markdown("""
 <div style='text-align: center'>
     <p><strong>SignalForge</strong> - Production ML system with statistical rigor</p>
-    <p>Built by <a href='https://christiangcallahan.tech'>Christian Callahan</a> | 
-    <a href='https://github.com/CCallahan308/signalforge'>GitHub</a> |
-    Dual MS Candidate (MBA + Data Science)
-    </p>
+    <p>Built by <a href='https://christiangcallahan.tech'>Christian Callahan</a>
+    | <a href='https://github.com/CCallahan308/signalforge'>GitHub</a>
+    | Dual MS Candidate (MBA + Data Science)</p>
 </div>
 """, unsafe_allow_html=True)

@@ -38,18 +38,18 @@ Logistic Regression won on discrimination. Gradient Boosting was better calibrat
 3. **Confidence intervals change decisions.** Without CIs, the AUC difference between LR and RF looks meaningful. With them (overlapping), you realize it's borderline.
 4. **Calibration matters for business use.** A model that ranks well but gives garbage probabilities leads to bad ROI estimates.
 
-## What I'd Do Differently
+## Architecture Notes
 
-- The dataset is a single snapshot. A temporal dataset with monthly cohorts would be more realistic and allow drift detection.
-- I'd add cost-sensitive learning upfront instead of post-hoc ROI calculations.
-- The dashboard needs pre-computed artifacts, not a live database. I'd restructure for stateless deployment.
+- **Temporal data**: The IBM Telco dataset is a single snapshot. A production system would use monthly cohort data to enable drift detection and retraining triggers.
+- **Cost-sensitive learning**: Integrating business cost matrices into model training directly would improve ROI optimization over post-hoc threshold tuning.
+- **Stateless deployment**: The dashboard is designed to load pre-computed artifacts, making it suitable for stateless cloud deployment without a live database dependency.
 
 ## Quick Start
 
 ### Prerequisites
 
 - Python 3.11+
-- PostgreSQL 18
+- PostgreSQL 16+
 - Kaggle API key (for data)
 
 ### Installation
@@ -70,13 +70,10 @@ python scripts/setup_database.py --user postgres --password YOUR_PASSWORD
 python scripts/download_real_data.py --source telco
 
 # Build features
-python scripts/engineer_features.py
+python scripts/engineer_real_features.py
 
-# Train models
-python scripts/train_model.py
-
-# Run statistical analysis
-python scripts/advanced_model_analysis.py
+# Train models (Optuna-tuned, with statistical analysis)
+python scripts/train_with_optuna.py
 
 # Launch dashboard
 streamlit run src/app/dashboard.py
@@ -96,20 +93,19 @@ Full deployment guide in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 ```
 signalforge/
 ├── data/
-│   ├── raw/                    # From Kaggle
-│   └── processed/              # 54 features
+│   ├── raw/                    # From Kaggle (not tracked)
+│   └── processed/              # 58 engineered features (not tracked)
 ├── models/
-│   └── artifacts/              # Trained models
+│   └── artifacts/              # Trained models (not tracked)
 ├── scripts/
 │   ├── setup_database.py
 │   ├── download_real_data.py
-│   ├── engineer_features.py
-│   ├── train_model.py
-│   ├── advanced_model_analysis.py
-│   └── quick_eda.py
+│   ├── engineer_real_features.py
+│   └── train_with_optuna.py
 ├── src/
 │   ├── app/
-│   │   └── dashboard.py
+│   │   ├── dashboard.py
+│   │   └── dashboard_demo.py
 │   ├── api/                    # Planned
 │   └── monitoring/             # Planned
 ├── docs/
@@ -117,16 +113,10 @@ signalforge/
 │   ├── FEATURES.md
 │   ├── MODEL_RESULTS.md
 │   ├── DATASETS.md
-│   ├── DEPLOYMENT.md
-│   ├── JANE_STREET_REVIEW.md
-│   └── JANE_STREET_TAKEAWAYS.md
+│   └── DEPLOYMENT.md
 ├── infrastructure/
 │   └── sql/
 │       └── 01_schema.sql       # 17 tables, 4 schemas
-├── README.md
-├── ABOUT.md
-├── LEARNING.md
-├── REVIEW.md
 ├── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt
@@ -134,7 +124,7 @@ signalforge/
 
 ## Tech Stack
 
-- Python 3.11+ / PostgreSQL 18
+- Python 3.11+ / PostgreSQL 16+
 - scikit-learn, pandas, numpy
 - Optuna (hyperparameter tuning)
 - Streamlit, Plotly
