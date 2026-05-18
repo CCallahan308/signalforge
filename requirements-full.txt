@@ -18,7 +18,7 @@ econml==0.15.0
 mlflow==2.10.0
 evidently==0.4.0
 great-expectations==0.18.8
-feast==0.38.0
+feast==0.63.0
 bentoml==1.2.0
 
 # Data Engineering
