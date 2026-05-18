@@ -9,6 +9,7 @@ Usage:
 """
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -56,7 +57,7 @@ def check_prerequisites():
             host="localhost",
             port=5432,
             user="postgres",
-            password="@D@mnati0n123",
+            password=os.environ.get("POSTGRES_PASSWORD", ""),
             database="signalforge"
         )
         conn.close()

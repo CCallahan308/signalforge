@@ -10,13 +10,12 @@ USAGE:
 Built by Christian G Callahan - April 2026
 """
 
-import streamlit as st
+from pathlib import Path
+
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from pathlib import Path
-import sys
+import streamlit as st
 
 # Page config
 st.set_page_config(
@@ -56,12 +55,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+_ROOT = Path(__file__).parent.parent.parent
+
+
 @st.cache_data
 def load_data():
     """Load engineered features and model results."""
     try:
-        features = pd.read_parquet('data/processed/features.parquet')
-        model_comparison = pd.read_csv('models/artifacts/model_comparison.csv')
+        features = pd.read_parquet(_ROOT / 'data' / 'processed' / 'features.parquet')
+        model_comparison = pd.read_csv(_ROOT / 'models' / 'artifacts' / 'model_comparison.csv')
 
         # Add derived columns that the dashboard expects
         if 'account_id' not in features.columns:
@@ -72,16 +74,19 @@ def load_data():
             features['account_age_months'] = features['tenure']
         if 'Contract' not in features.columns:
             def infer_contract(row):
-                if row.get('is_two_year', 0) == 1: return 'Two year'
-                elif row.get('is_one_year', 0) == 1: return 'One year'
-                else: return 'Month-to-month'
+                if row.get('is_two_year', 0) == 1:
+                    return 'Two year'
+                elif row.get('is_one_year', 0) == 1:
+                    return 'One year'
+                else:
+                    return 'Month-to-month'
             features['Contract'] = features.apply(infer_contract, axis=1)
         if 'tenure_bucket' not in features.columns:
             features['tenure_bucket'] = pd.cut(features['tenure'], bins=[0, 12, 24, 48, 72], labels=['0-12', '13-24', '25-48', '49-72+'], right=True)
 
         return features, model_comparison
     except FileNotFoundError:
-        st.error("Data not found! Run: python scripts/engineer_features.py && python scripts/train_model.py")
+        st.error("Data not found! Run: python scripts/engineer_real_features.py && python scripts/train_with_optuna.py")
         st.stop()
 
 
@@ -101,6 +106,7 @@ def main():
     st.sidebar.header("🔧 Filters & Settings")
     show_all = st.sidebar.checkbox("Show all customers", value=False)
     risk_threshold = st.sidebar.slider("Risk Score Threshold", 0.0, 1.0, 0.5)
+    st.sidebar.caption(f"Showing {'all' if show_all else 'high-risk'} customers · threshold ≥ {risk_threshold:.2f}")
 
     # Main metrics
     st.header("📈 Business Impact Overview")
@@ -143,11 +149,12 @@ def main():
         *Risk Score = Probability of churn (0-1 scale)*
         """)
 
-        # Get high-risk customers
-        if 'churn_risk_score' in features.columns:
-            high_risk = features[features['churn_risk_score'] >= features['churn_risk_score'].quantile(0.75)].copy()
+        # Get high-risk customers filtered by sidebar controls
+        if show_all:
+            high_risk = features.copy()
+        elif 'churn_risk_score' in features.columns:
+            high_risk = features[features['churn_risk_score'] >= risk_threshold].copy()
         else:
-            # Fallback to churned flag for demo
             high_risk = features[features['churned'] == 1].copy()
 
         high_risk['risk_label'] = high_risk['churned'].map({1: 'Churned', 0: 'Active'}).fillna('Unknown')
