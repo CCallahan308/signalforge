@@ -5,12 +5,13 @@ Tests for model performance, data integrity, and feature engineering.
 Run with: python -m pytest tests/ -v
 """
 
-import pytest
-import pandas as pd
-import numpy as np
-import joblib
 import json
 from pathlib import Path
+
+import joblib
+import numpy as np
+import pandas as pd
+import pytest
 
 BASE_DIR = Path(__file__).parent.parent
 
