@@ -43,22 +43,21 @@ env/
 data/raw/*.csv
 data/raw/*.parquet
 data/processed/*.parquet
+data/processed/*.csv
+data/processed/*.json
+data/sample_customers.csv
 data/external/
 *.db
 *.sqlite
 
-# BUT allow specific demo data files
-!data/raw/WA_Fn_UseC_Telco_Customer_Churn.csv
-!data/processed/features.parquet
-!data/processed/features.csv
-
-# Models
+# Model artifacts
+models/artifacts/*.pkl
+models/artifacts/*.json
+models/artifacts/*.csv
 models/artifacts/*.joblib
 models/artifacts/*.onnx
+models/model_comparison.csv
 models/checkpoints/
-
-# BUT allow trained model .pkl files for validation
-!models/artifacts/*.pkl
 
 # Logs
 logs/*.log

@@ -9,6 +9,7 @@ Usage:
     python scripts/setup_database.py  # Will prompt for password
 """
 
+import os
 import sys
 import argparse
 import getpass
@@ -86,10 +87,10 @@ class DatabaseSetup:
             logger.info("User 'signalforge_user' already exists")
         else:
             logger.info("Creating user 'signalforge_user'...")
-            # Use provided password or default
-            password = user_password or "SignalForge2024!"
+            # Use provided password or environment variable
+            password = user_password or os.environ.get("POSTGRES_PASSWORD", "")
             cursor.execute(f"CREATE USER signalforge_user WITH PASSWORD '{password}'")
-            logger.success(f"Created user 'signalforge_user' (password: {password})")
+            logger.success("Created user 'signalforge_user'")
         
         cursor.close()
     

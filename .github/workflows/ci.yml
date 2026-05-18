@@ -21,11 +21,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-full.txt
-          pip install pytest ruff
+          pip install -r requirements.txt
+          pip install pytest ruff pytest-cov
 
       - name: Lint with ruff
         run: ruff check src tests
+
+      - name: Generate artifacts for tests
+        run: |
+          python scripts/engineer_real_features.py
+          python scripts/train_with_optuna.py
 
       - name: Run tests
         run: pytest tests/ -v
