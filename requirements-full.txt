@@ -51,7 +51,7 @@ pytest-asyncio==0.23.3
 hypothesis==6.97.4
 
 # Dev Tools
-black==24.1.1
+black==26.5.1
 isort==5.13.2
 flake8==7.0.0
 mypy==1.8.0
