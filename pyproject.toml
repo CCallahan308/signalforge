@@ -17,7 +17,7 @@ dependencies = [
     "optuna>=4.8.0",
     "joblib>=1.5.3",
     "streamlit>=1.57.0,<2.0",
-    "plotly>=5.18.0,<7.0",
+    "plotly>=6.7.0,<7.0",
     "loguru>=0.7.3",
 ]
 
