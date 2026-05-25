@@ -1,15 +1,21 @@
-# SignalForge Dashboard - Streamlit Cloud Requirements
-# Minimal dependencies for dashboard deployment
+# SignalForge runtime dependencies (pipeline + dashboard).
+# Mirrors [project].dependencies in pyproject.toml. Target: Python 3.11.
+# Upper bounds keep an unvetted major release from silently breaking the build.
 
-# Core - relaxed pins for Python 3.14 compatibility on Streamlit Cloud
-numpy>=1.26.4
-pandas>=3.0.3
+# Data + IO
+numpy>=1.26.4,<3.0
+pandas>=2.2.0,<4.0
+pyarrow>=15.0.0          # required by pandas.to_parquet
 
-# ML & Visualization
-scikit-learn>=1.4.0
-streamlit>=1.30.0
-plotly>=5.18.0
+# Modeling
+scikit-learn>=1.4.0,<2.0
+scipy>=1.12.0
+optuna>=3.5.0
+joblib>=1.3.0
 
-# Data handling
-pydantic>=2.5.3
-python-dotenv>=1.0.0
+# Dashboard
+streamlit>=1.30.0,<2.0
+plotly>=5.18.0,<7.0
+
+# Logging (download/quickstart scripts)
+loguru>=0.7.0

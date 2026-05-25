@@ -39,25 +39,21 @@ env/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Data
-data/raw/*.csv
-data/raw/*.parquet
-data/processed/*.parquet
-data/processed/*.csv
-data/processed/*.json
+# Data — the canonical raw IBM Telco CSV and engineered features ARE committed
+# so a clone runs without Kaggle. Download byproducts and the redundant CSV are not.
+data/raw/telco/
+data/raw/*_processed.csv
+data/raw/*_metadata.json
+data/processed/features.csv
 data/sample_customers.csv
 data/external/
 *.db
 *.sqlite
 
-# Model artifacts
-models/artifacts/*.pkl
-models/artifacts/*.json
-models/artifacts/*.csv
-models/artifacts/*.joblib
-models/artifacts/*.onnx
-models/model_comparison.csv
+# Model artifacts ARE committed (pickles are sklearn-version-specific; see README).
 models/checkpoints/
+*.onnx
+*.joblib
 
 # Logs
 logs/*.log
@@ -108,3 +104,12 @@ Thumbs.db
 *.tmp
 *.bak
 *.swp
+
+# Local editor/agent tooling (config + session logs — not project code)
+.claude/
+CLAUDE.md
+session_logs/
+.cursor/
+.cursorrules
+.aider*
+.github/copilot-instructions.md

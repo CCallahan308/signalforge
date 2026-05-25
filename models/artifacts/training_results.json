@@ -1,0 +1,238 @@
+{
+  "training_date": "2026-05-24T20:14:42.942439",
+  "dataset": "IBM Telco Customer Churn (Kaggle)",
+  "n_customers": 7043,
+  "n_features": 51,
+  "churn_rate": 0.2654,
+  "business_impact": {
+    "monthly_revenue": 456116.6,
+    "churned_monthly_revenue": 139130.85,
+    "annual_revenue_at_risk": 1669570.2
+  },
+  "models": {
+    "logistic_regression": {
+      "auc": 0.8487,
+      "f1": 0.6128,
+      "precision": 0.5,
+      "recall": 0.7914,
+      "brier_score": 0.1642,
+      "cv_auc_mean": 0.8495,
+      "cv_auc_std": 0.0131,
+      "ci_lower": 0.8273,
+      "ci_upper": 0.869,
+      "optuna_params": {
+        "penalty": "l2",
+        "C": 1.65399
+      },
+      "optuna_best_trial": 0.8495,
+      "optuna_n_trials": 20
+    },
+    "random_forest": {
+      "auc": 0.8457,
+      "f1": 0.6365,
+      "precision": 0.5335,
+      "recall": 0.7888,
+      "brier_score": 0.1602,
+      "cv_auc_mean": 0.8458,
+      "cv_auc_std": 0.0115,
+      "ci_lower": 0.8225,
+      "ci_upper": 0.8664,
+      "p_value_vs_lr": 0.0322,
+      "optuna_params": {
+        "n_estimators": 202,
+        "max_depth": 6,
+        "min_samples_split": 3,
+        "min_samples_leaf": 10,
+        "max_features": "sqrt"
+      },
+      "optuna_best_trial": 0.8458,
+      "optuna_n_trials": 20
+    },
+    "gradient_boosting": {
+      "auc": 0.8466,
+      "f1": 0.5753,
+      "precision": 0.6498,
+      "recall": 0.516,
+      "brier_score": 0.1354,
+      "cv_auc_mean": 0.8487,
+      "cv_auc_std": 0.0121,
+      "ci_lower": 0.8254,
+      "ci_upper": 0.8663,
+      "p_value_vs_lr": 0.4637,
+      "optuna_params": {
+        "n_estimators": 258,
+        "max_depth": 2,
+        "learning_rate": 0.037196,
+        "min_samples_split": 2,
+        "min_samples_leaf": 8,
+        "subsample": 0.644118,
+        "max_features": "sqrt"
+      },
+      "optuna_best_trial": 0.8487,
+      "optuna_n_trials": 20
+    }
+  },
+  "feature_names": [
+    "SeniorCitizen",
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges",
+    "tenure_years",
+    "is_new_customer",
+    "is_very_new",
+    "is_established",
+    "is_long_term",
+    "tenure_risk",
+    "tenure_squared",
+    "log_tenure",
+    "is_month_to_month",
+    "is_one_year",
+    "is_two_year",
+    "contract_risk",
+    "is_auto_payment",
+    "is_electronic_check",
+    "is_paperless",
+    "payment_risk",
+    "payment_stability",
+    "service_count",
+    "has_security",
+    "has_tech_support",
+    "has_backup",
+    "has_protection",
+    "has_internet",
+    "is_fiber_optic",
+    "no_internet",
+    "has_phone",
+    "has_multiple_lines",
+    "service_adoption_rate",
+    "no_protection",
+    "no_support",
+    "is_senior",
+    "has_partner",
+    "has_dependents",
+    "is_single",
+    "family_size",
+    "is_male",
+    "avg_monthly_from_total",
+    "charge_trend",
+    "charge_trend_pct",
+    "total_revenue_per_month",
+    "lifetime_value",
+    "charge_per_service",
+    "contract_tenure_risk",
+    "payment_service_risk",
+    "value_at_risk",
+    "engagement_score",
+    "churn_risk_score"
+  ],
+  "feature_coefficients": [
+    {
+      "feature": "log_tenure",
+      "coefficient": -1.4268697922204692,
+      "abs_coefficient": 1.4268697922204692
+    },
+    {
+      "feature": "tenure_squared",
+      "coefficient": -1.4019556046033992,
+      "abs_coefficient": 1.4019556046033992
+    },
+    {
+      "feature": "is_fiber_optic",
+      "coefficient": 1.0098505595226188,
+      "abs_coefficient": 1.0098505595226188
+    },
+    {
+      "feature": "tenure_risk",
+      "coefficient": -0.8010403195491315,
+      "abs_coefficient": 0.8010403195491315
+    },
+    {
+      "feature": "tenure",
+      "coefficient": 0.801040319549127,
+      "abs_coefficient": 0.801040319549127
+    },
+    {
+      "feature": "tenure_years",
+      "coefficient": 0.8010403195491265,
+      "abs_coefficient": 0.8010403195491265
+    },
+    {
+      "feature": "contract_tenure_risk",
+      "coefficient": 0.6720676645802228,
+      "abs_coefficient": 0.6720676645802228
+    },
+    {
+      "feature": "service_count",
+      "coefficient": 0.5730637613899257,
+      "abs_coefficient": 0.5730637613899257
+    },
+    {
+      "feature": "service_adoption_rate",
+      "coefficient": 0.5730637613899228,
+      "abs_coefficient": 0.5730637613899228
+    },
+    {
+      "feature": "engagement_score",
+      "coefficient": 0.4177051746597386,
+      "abs_coefficient": 0.4177051746597386
+    },
+    {
+      "feature": "MonthlyCharges",
+      "coefficient": -0.4089876110458841,
+      "abs_coefficient": 0.4089876110458841
+    },
+    {
+      "feature": "lifetime_value",
+      "coefficient": -0.3387763341649482,
+      "abs_coefficient": 0.3387763341649482
+    },
+    {
+      "feature": "avg_monthly_from_total",
+      "coefficient": -0.33365684928463935,
+      "abs_coefficient": 0.33365684928463935
+    },
+    {
+      "feature": "total_revenue_per_month",
+      "coefficient": -0.33365684928463935,
+      "abs_coefficient": 0.33365684928463935
+    },
+    {
+      "feature": "has_internet",
+      "coefficient": 0.3238994188980864,
+      "abs_coefficient": 0.3238994188980864
+    },
+    {
+      "feature": "no_internet",
+      "coefficient": -0.3238994188980846,
+      "abs_coefficient": 0.3238994188980846
+    },
+    {
+      "feature": "has_backup",
+      "coefficient": -0.30952893309489343,
+      "abs_coefficient": 0.30952893309489343
+    },
+    {
+      "feature": "has_multiple_lines",
+      "coefficient": 0.287436545419543,
+      "abs_coefficient": 0.287436545419543
+    },
+    {
+      "feature": "charge_trend_pct",
+      "coefficient": -0.2809777994937543,
+      "abs_coefficient": 0.2809777994937543
+    },
+    {
+      "feature": "has_security",
+      "coefficient": -0.27847799186720645,
+      "abs_coefficient": 0.27847799186720645
+    }
+  ],
+  "validation": {
+    "method": "5-fold stratified cross-validation on the training split",
+    "hyperparameter_tuning": "Optuna TPE (seed=42, 20 trials per model)",
+    "bootstrap_ci_samples": 1000,
+    "significance_test": "paired t-test on per-fold training CV AUC vs. Logistic Regression",
+    "feature_importance": "standardized logistic-regression coefficients (log-odds)",
+    "leakage_controls": "test split held out before tuning; LR scaling refit inside each CV fold via Pipeline"
+  }
+}

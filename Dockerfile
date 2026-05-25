@@ -1,5 +1,7 @@
 # SignalForge Dockerfile
-FROM python:3.14-slim
+# Pinned to 3.11 to match .python-version, pyproject (requires-python >=3.11)
+# and CI. The numpy/scipy/scikit-learn pins do not have wheels for 3.14.
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
@@ -9,11 +11,12 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
-COPY requirements-full.txt .
+# Copy requirements (dashboard + pipeline only; the full stack in
+# requirements-full.txt is aspirational and mostly unused at runtime)
+COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements-full.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .

@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Fast Optuna pass for CI; full runs use the default (20).
+      SIGNALFORGE_N_TRIALS: "5"
     steps:
       - uses: actions/checkout@v6
 
@@ -25,9 +28,12 @@ jobs:
           pip install pytest ruff pytest-cov
 
       - name: Lint with ruff
-        run: ruff check src tests
+        run: ruff check src tests scripts
 
-      - name: Generate artifacts for tests
+      - name: Generate synthetic sample data (no Kaggle creds in CI)
+        run: python scripts/generate_sample_data.py
+
+      - name: Build features and train models
         run: |
           python scripts/engineer_real_features.py
           python scripts/train_with_optuna.py
