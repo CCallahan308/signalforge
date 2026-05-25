@@ -220,35 +220,19 @@
 
 ---
 
-## Next Steps
+## What was built from these findings
 
-1. **Feature Engineering** (create `scripts/engineer_features.py`)
-   - Tenure buckets
-   - Service count
-   - Payment automation flag
-   - High-value flag
+1. **Feature engineering** — `scripts/engineer_real_features.py` (tenure, contract, payment,
+   service, demographic, financial, and interaction features; all row-local).
+2. **Model training** — `scripts/train_with_optuna.py` (logistic regression baseline + random
+   forest + gradient boosting, Optuna-tuned, leak-free 5-fold CV, held-out test set).
+3. **Evaluation** — AUC, precision/recall/F1, Brier-score calibration, bootstrap 95% CIs, and
+   paired t-tests vs. the baseline, written to `models/artifacts/training_results.json`.
+4. **Business view** — revenue-at-risk and a what-if ROI calculator in the Streamlit dashboard
+   (`src/app/dashboard.py`).
 
-2. **Model Training** (create `scripts/train_model.py`)
-   - Train/test split (time-based)
-   - Baseline logistic regression
-   - XGBoost with hyperparameter tuning
-   - Cross-validation
-
-3. **Model Evaluation** (create `scripts/evaluate_model.py`)
-   - AUC-ROC, AUC-PR
-   - Precision/Recall at different thresholds
-   - Feature importance
-   - SHAP values for interpretability
-
-4. **Business Analysis** (create `scripts/business_impact.py`)
-   - Revenue at risk by segment
-   - Intervention ROI calculator
-   - What-if scenarios
-
-5. **API Development** (create `src/api/main.py`)
-   - Prediction endpoint
-   - Feature computation
-   - Business metrics
+Not built (and not claimed): uplift modeling, a prediction API, and SHAP — see the README's
+Limitations section.
 
 ---
 
@@ -272,5 +256,5 @@
 
 ---
 
-**Status:** EDA Complete - Ready for Feature Engineering
-**Next:** Create `scripts/engineer_features.py`
+**Status:** EDA complete.
+**Implemented in:** `scripts/engineer_real_features.py` (features) and `scripts/train_with_optuna.py` (models).

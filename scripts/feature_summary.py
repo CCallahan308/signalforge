@@ -1,89 +1,81 @@
 #!/usr/bin/env python3
-"""
-Quick summary of engineered features
+"""Print a quick summary of the engineered feature table.
+
+Run after scripts/engineer_real_features.py:
+    python scripts/feature_summary.py
 """
 
-import pandas as pd
+from __future__ import annotations
+
+import logging
+import sys
 from pathlib import Path
 
-print("=" * 80)
-print("SIGNALFORGE - FEATURE ENGINEERING SUMMARY")
-print("=" * 80)
+import pandas as pd
 
-# Load features
-try:
-    features = pd.read_parquet('data/processed/features.parquet')
-    print(f"\n[SUCCESS] Loaded engineered features")
-except FileNotFoundError:
-    print(f"\n[ERROR] Features not found. Run: python scripts/engineer_features.py")
-    exit(1)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+import config  # noqa: E402
 
-print(f"\n[DATASET]")
-print(f"   Records: {len(features):,}")
-print(f"   Total Features: {len(features.columns)}")
-print(f"   Memory: {features.memory_usage(deep=True).sum() / 1024**2:.1f} MB")
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+logger = logging.getLogger("feature_summary")
 
-# Categorize features
-numeric_features = features.select_dtypes(include=['int64', 'float64', 'uint8'])
-binary_features = numeric_features.loc[:, numeric_features.nunique() <= 2]
-categorical_features = features.select_dtypes(include=['object', 'category'])
-
-print(f"\n[FEATURE TYPES]")
-print(f"   Numeric Features: {len(numeric_features.columns)}")
-print(f"   Binary Features: {len(binary_features.columns)}")
-print(f"   Categorical Features: {len(categorical_features.columns)}")
-print(f"   Missing Values: {features.isnull().sum().sum()}")
-
-# Show some engineered features
-print(f"\n[SAMPLE ENGINEERED FEATURES]")
-engineered_features = [
-    'churn_risk_score', 'engagement_score', 'tenure_risk',
-    'contract_risk_score', 'payment_risk_score', 'service_risk',
-    'is_month_to_month', 'is_new_customer', 'is_high_value',
-    'service_adoption_rate', 'lifetime_value', 'price_sensitivity'
+# Names that actually exist in engineer_real_features.py output.
+ENGINEERED_FEATURES = [
+    "churn_risk_score", "engagement_score", "tenure_risk", "contract_risk",
+    "payment_risk", "is_month_to_month", "is_new_customer", "value_at_risk",
+    "service_adoption_rate", "lifetime_value", "charge_per_service",
 ]
 
-for i, feat in enumerate(engineered_features, 1):
-    if feat in features.columns:
-        dtype = features[feat].dtype
-        mean_val = features[feat].mean()
-        print(f"   {i:2}. {feat:25} mean={mean_val:.2f} ({dtype})")
 
-# Target variable
-if 'churned' in features.columns:
-    print(f"\n[TARGET VARIABLE]")
-    churn_rate = features['churned'].mean()
-    print(f"   Churn Rate: {churn_rate:.1%}")
-    print(f"   Churned: {features['churned'].sum():,}")
-    print(f"   Retained: {(1 - features['churned']).sum():,}")
+def main() -> None:
+    logger.info("=" * 80)
+    logger.info("SIGNALFORGE - FEATURE ENGINEERING SUMMARY")
+    logger.info("=" * 80)
 
-# Correlation with target
-if 'churned' in features.columns:
-    print(f"\n[TOP CORRELATIONS WITH CHURN]")
-    correlations = numeric_features.corr()['churned'].drop('churned')
-    top_positive = correlations.nlargest(5)
-    top_negative = correlations.nsmallest(5)
-    
-    print(f"\n   Positive (churn increases with feature):")
-    for feat, corr in top_positive.items():
-        print(f"      {feat:30} +{corr:.3f}")
-    
-    print(f"\n   Negative (churn decreases with feature):")
-    for feat, corr in top_negative.items():
-        print(f"      {feat:30} {corr:.3f}")
+    if not config.FEATURES_PARQUET.exists():
+        logger.error("Features not found. Run: python scripts/engineer_real_features.py")
+        sys.exit(1)
 
-print(f"\n[FILES]")
-output_dir = Path('data/processed')
-files = list(output_dir.glob('features.*'))
-for f in files:
-    size_mb = f.stat().st_size / 1024**2
-    print(f"   {f.name:30} {size_mb:.1f} MB")
+    features = pd.read_parquet(config.FEATURES_PARQUET)
+    logger.info("\n[DATASET]")
+    logger.info("   Records: %s", f"{len(features):,}")
+    logger.info("   Total Features: %d", len(features.columns))
+    logger.info("   Memory: %.1f MB", features.memory_usage(deep=True).sum() / 1024**2)
 
-print(f"\n[NEXT STEPS]")
-print(f"   1. Train model: python scripts/train_model.py")
-print(f"   2. Evaluate: python scripts/evaluate_model.py")
-print(f"   3. Deploy API: uvicorn src.api.main:app --reload")
+    numeric_features = features.select_dtypes(include=["int64", "float64", "uint8"])
+    binary_features = numeric_features.loc[:, numeric_features.nunique() <= 2]
+    categorical_features = features.select_dtypes(include=["object", "category"])
 
-print("\n" + "=" * 80)
-print("[READY] Features engineered successfully!")
-print("=" * 80)
+    logger.info("\n[FEATURE TYPES]")
+    logger.info("   Numeric Features: %d", len(numeric_features.columns))
+    logger.info("   Binary Features: %d", len(binary_features.columns))
+    logger.info("   Categorical Features: %d", len(categorical_features.columns))
+    logger.info("   Missing Values: %d", int(features.isnull().sum().sum()))
+
+    logger.info("\n[SAMPLE ENGINEERED FEATURES]")
+    for i, feat in enumerate((f for f in ENGINEERED_FEATURES if f in features.columns), 1):
+        logger.info("   %2d. %-25s mean=%.2f (%s)", i, feat, features[feat].mean(), features[feat].dtype)
+
+    if config.TARGET_COLUMN in features.columns:
+        logger.info("\n[TARGET VARIABLE]")
+        logger.info("   Churn Rate: %.1f%%", features[config.TARGET_COLUMN].mean() * 100)
+        logger.info("   Churned: %s", f"{int(features[config.TARGET_COLUMN].sum()):,}")
+        logger.info("   Retained: %s", f"{int((1 - features[config.TARGET_COLUMN]).sum()):,}")
+
+        logger.info("\n[TOP CORRELATIONS WITH CHURN]")
+        correlations = numeric_features.corr()[config.TARGET_COLUMN].drop(config.TARGET_COLUMN)
+        logger.info("\n   Positive (churn increases with feature):")
+        for feat, corr in correlations.nlargest(5).items():
+            logger.info("      %-30s +%.3f", feat, corr)
+        logger.info("\n   Negative (churn decreases with feature):")
+        for feat, corr in correlations.nsmallest(5).items():
+            logger.info("      %-30s %.3f", feat, corr)
+
+    logger.info("\n[NEXT STEPS]")
+    logger.info("   1. Train models: python scripts/train_with_optuna.py")
+    logger.info("   2. Launch dashboard: streamlit run src/app/dashboard.py")
+    logger.info("\n" + "=" * 80)
+
+
+if __name__ == "__main__":
+    main()

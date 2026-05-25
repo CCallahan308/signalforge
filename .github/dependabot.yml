@@ -21,12 +21,5 @@ updates:
     commit-message:
       prefix: "ci"
 
-  - package-ecosystem: docker
-    directory: "/"
-    schedule:
-      interval: monthly
-    labels:
-      - dependencies
-      - docker
-    commit-message:
-      prefix: "docker"
+  # No docker updater: the base image is pinned to python:3.11-slim to match
+  # the pinned scientific stack. Auto-bumping it (e.g. to 3.14) breaks the build.

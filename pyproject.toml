@@ -1,7 +1,7 @@
 [project]
 name = "signalforge"
 version = "0.1.0"
-description = "Production-grade SaaS churn intelligence system"
+description = "Churn prediction on the IBM Telco dataset with leak-free CV and statistical model comparison"
 authors = [
     {name = "Christian G Callahan", email = "contact@christiangcallahan.tech"}
 ]
@@ -9,15 +9,16 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
-    "pandas>=2.2.0",
-    "numpy>=1.26.4",
-    "scikit-learn>=1.4.0",
-    "streamlit>=1.30.0",
-    "plotly>=5.18.0",
-    "pydantic>=2.5.0",
-    "python-dotenv>=1.0.0",
+    "pandas>=2.2.0,<4.0",
+    "numpy>=1.26.4,<3.0",
+    "pyarrow>=15.0.0",
+    "scikit-learn>=1.4.0,<2.0",
+    "scipy>=1.12.0",
     "optuna>=3.5.0",
     "joblib>=1.3.0",
+    "streamlit>=1.30.0,<2.0",
+    "plotly>=5.18.0,<7.0",
+    "loguru>=0.7.0",
 ]
 
 [build-system]
@@ -69,7 +70,6 @@ python_version = "3.11"
 warn_return_any = true
 warn_unused_ignores = true
 disallow_untyped_defs = true
-plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"

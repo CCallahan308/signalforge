@@ -40,8 +40,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title
-st.title("📊 SignalForge - Production Churn Intelligence")
+st.title("📊 SignalForge - Churn Intelligence")
 st.markdown("**Live Demo** | [GitHub Repo](https://github.com/CCallahan308/signalforge) | [Project Page](https://christiangcallahan.tech/projects/signalforge)")
+st.caption(
+    "Static showcase with representative figures from the IBM Telco run. "
+    "Reproduce exact numbers with `python scripts/train_with_optuna.py` "
+    "(written to models/artifacts/training_results.json)."
+)
 st.markdown("---")
 
 # Model Performance Section
@@ -51,35 +56,42 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.metric(
-        label="Model AUC",
-        value="0.850 ± 0.013",
-        delta="95% CI: [0.827, 0.870]"
+        label="Logistic Regression AUC",
+        value="0.849 ± 0.012",
+        delta="95% CI: [0.828, 0.869]"
     )
 
 with col2:
     st.metric(
         label="vs Random Forest",
-        value="p=0.0074",
-        delta="Statistically significant ✅"
+        value="p = 0.016",
+        delta="CIs overlap — borderline",
+        delta_color="off"
     )
 
 with col3:
     st.metric(
         label="vs Gradient Boosting",
-        value="p=0.0004",
-        delta="Statistically significant ✅"
+        value="p = 0.130",
+        delta="Not significant",
+        delta_color="off"
     )
 
-st.info("💡 Logistic Regression is statistically significantly better than both Random Forest and Gradient Boosting with 95% confidence intervals that don't overlap.")
+st.info(
+    "💡 The three models are within ~0.005 AUC of each other and their 95% CIs overlap, "
+    "so the differences are borderline. Logistic Regression is used in production for its "
+    "discrimination **and** interpretability; Gradient Boosting is better calibrated "
+    "(Brier 0.139 vs 0.164) and would be preferred when probability accuracy matters most."
+)
 
 # Model Comparison Chart
 st.subheader("Model Comparison with Confidence Intervals")
 
 models_data = {
     'Model': ['Logistic Regression', 'Random Forest', 'Gradient Boosting'],
-    'AUC': [0.850, 0.839, 0.832],
-    'CI_Lower': [0.827, 0.821, 0.812],
-    'CI_Upper': [0.870, 0.857, 0.852]
+    'AUC': [0.849, 0.844, 0.846],
+    'CI_Lower': [0.828, 0.825, 0.827],
+    'CI_Upper': [0.869, 0.863, 0.866]
 }
 
 df_models = pd.DataFrame(models_data)
@@ -148,21 +160,25 @@ with col2:
         step=1
     )
 
-# Calculate ROI
+# Calculate ROI (annualized, internally consistent)
 customers_at_risk = 1409
-revenue_per_customer = 965
-monthly_revenue_at_risk = customers_at_risk * revenue_per_customer
+annual_value_per_customer = 965  # annual revenue retained per saved customer
 customers_saved = int(customers_at_risk * (save_rate / 100))
-revenue_saved = customers_saved * revenue_per_customer
-roi = revenue_saved / (intervention_budget * 1000)
+annual_revenue_saved = customers_saved * annual_value_per_customer
+annual_cost = intervention_budget * 1000 * 12  # budget slider is $K/month
+net_profit = annual_revenue_saved - annual_cost
+# Return on spend = revenue per $1 invested; net ROI subtracts cost.
+return_on_spend = annual_revenue_saved / annual_cost if annual_cost else 0.0
+net_roi = net_profit / annual_cost if annual_cost else 0.0
 
 st.markdown(f"""
-**Results:**
+**Results (annualized):**
 - Customers targeted: **{customers_at_risk:,}**
 - Customers saved: **{customers_saved:,}**
-- Monthly revenue saved: **${revenue_saved:,.0f}**
-- ROI: **{roi:.2f}x**
-- Annual savings: **${revenue_saved * 12:,.0f}**
+- Annual revenue saved: **${annual_revenue_saved:,.0f}**
+- Annual intervention cost: **${annual_cost:,.0f}**
+- Net profit: **${net_profit:,.0f}**
+- Return on spend: **{return_on_spend:.2f}x** (net ROI {net_roi:+.0%})
 """)
 
 # Feature Importance
@@ -187,7 +203,7 @@ fig_features = px.bar(
     x='Importance',
     y='Feature',
     orientation='h',
-    title='Feature Importance (Learned via Ridge Regression)',
+    title='Feature effects (standardized logistic-regression coefficients, |log-odds|)',
     color='Importance',
     color_continuous_scale='Blues'
 )
@@ -199,7 +215,7 @@ st.plotly_chart(fig_features, use_container_width=True)
 # Feature insights
 st.markdown("**Key Insights:**")
 for idx, row in df_features.iterrows():
-    st.markdown(f"- **{row['Feature']}** (weight: {row['Importance']:.3f}): {row['Insight']}")
+    st.markdown(f"- **{row['Feature']}** (|coef|: {row['Importance']:.3f}): {row['Insight']}")
 
 # Statistical Rigor Section
 st.header("🧪 Statistical Rigor")
@@ -207,22 +223,21 @@ st.header("🧪 Statistical Rigor")
 st.markdown("""
 **What Makes This Different:**
 
-✅ **5-fold stratified cross-validation** — not just single train/test split
+✅ **5-fold stratified cross-validation** on the training split — not a single train/test split
 ✅ **Bootstrap 95% confidence intervals** (1000 samples) — quantifies uncertainty
-✅ **Statistical significance testing** (p-values) — proves model superiority
-✅ **Learned feature weights** (Ridge regression) — data-driven, not hard-coded
-✅ **Calibration analysis** (Brier score, ECE) — probability accuracy verified
+✅ **Statistical significance testing** (paired t-tests) — quantifies whether model differences are real or noise
+✅ **Model coefficients** (standardized logistic regression) — explains the model itself, not a surrogate
+✅ **Calibration** (Brier score) — checks probability accuracy, not just ranking
 
-**Most portfolio projects skip these steps.** This demonstrates production-grade rigor.
+These are the methods this project applies; see the README for honest limitations.
 """)
 
 # Footer
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center'>
-    <p><strong>SignalForge</strong> - Production ML system with statistical rigor</p>
+    <p><strong>SignalForge</strong> - churn prediction with statistical model comparison</p>
     <p>Built by <a href='https://christiangcallahan.tech'>Christian Callahan</a>
-    | <a href='https://github.com/CCallahan308/signalforge'>GitHub</a>
-    | Dual MS Candidate (MBA + Data Science)</p>
+    | <a href='https://github.com/CCallahan308/signalforge'>GitHub</a></p>
 </div>
 """, unsafe_allow_html=True)

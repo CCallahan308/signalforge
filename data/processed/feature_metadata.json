@@ -1,0 +1,18 @@
+{
+  "input_file": "C:\\Users\\Calla\\OneDrive\\Desktop\\Project\\Github Repos\\GitHub fix\\signalforge\\data\\raw\\WA_Fn_UseC_Telco_Customer_Churn.csv",
+  "output_file": "C:\\Users\\Calla\\OneDrive\\Desktop\\Project\\Github Repos\\GitHub fix\\signalforge\\data\\processed\\features.parquet",
+  "n_records": 7043,
+  "n_features": 58,
+  "churn_rate": 0.2654,
+  "feature_groups": {
+    "tenure": 8,
+    "contract": 4,
+    "payment": 5,
+    "service": 13,
+    "demographic": 6,
+    "financial": 6,
+    "interaction": 5,
+    "one_hot": 11
+  },
+  "created_at": "2026-05-24T20:10:41.489205"
+}

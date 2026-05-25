@@ -82,7 +82,7 @@ def load_data():
                     return 'Month-to-month'
             features['Contract'] = features.apply(infer_contract, axis=1)
         if 'tenure_bucket' not in features.columns:
-            features['tenure_bucket'] = pd.cut(features['tenure'], bins=[0, 12, 24, 48, 72], labels=['0-12', '13-24', '25-48', '49-72+'], right=True)
+            features['tenure_bucket'] = pd.cut(features['tenure'], bins=[-1, 12, 24, 48, 72], labels=['0-12', '13-24', '25-48', '49-72+'], right=True)
 
         return features, model_comparison
     except FileNotFoundError:
@@ -160,7 +160,7 @@ def main():
         high_risk['risk_label'] = high_risk['churned'].map({1: 'Churned', 0: 'Active'}).fillna('Unknown')
 
         # Display top 20 at-risk customers
-        display_cols = ['account_id', 'mrr', 'churn_risk_score', 'contract_risk_score',
+        display_cols = ['account_id', 'mrr', 'churn_risk_score', 'contract_risk',
                         'tenure_risk', 'is_month_to_month', 'is_new_customer']
 
         available_cols = [col for col in display_cols if col in high_risk.columns]
@@ -170,7 +170,7 @@ def main():
                 high_risk[available_cols].head(20).style.format({
                     'mrr': '${:.2f}',
                     'churn_risk_score': '{:.2f}',
-                    'contract_risk_score': '{:.2f}',
+                    'contract_risk': '{:.2f}',
                     'tenure_risk': '{:.2f}'
                 }),
                 use_container_width=True

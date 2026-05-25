@@ -36,8 +36,8 @@ class TestDataIntegrity:
         churn_rate = (df['Churn'] == 'Yes').mean()
         assert 0.20 < churn_rate < 0.35, f"Churn rate {churn_rate:.1%} outside expected range"
 
-    def test_customer_ids_are_real(self):
-        """Verify these are real IBM customer IDs, not synthetic."""
+    def test_customer_id_format(self):
+        """Customer IDs follow the IBM Telco format (digits + dash + letters)."""
         raw = BASE_DIR / 'data' / 'raw' / 'WA_Fn_UseC_Telco_Customer_Churn.csv'
         df = pd.read_csv(raw)
         first_id = df.iloc[0]['customerID']

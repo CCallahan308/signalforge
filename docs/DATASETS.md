@@ -38,8 +38,6 @@ For $200k+ senior data science roles, synthetic data is a red flag. Recruiters w
 - ✅ Clear business context
 - ✅ Used in many interviews
 
-**Resume Bullet:**
-> "Built production churn prediction system on IBM Telco benchmark, achieving 0.82 AUC (top 10% on Kaggle leaderboard) and identifying key retention drivers including contract type and tenure"
 
 **Download:**
 ```bash
@@ -74,8 +72,6 @@ python scripts/download_real_data.py --source telco
 - ✅ Good for banking/fintech roles
 - ✅ Credit risk patterns
 
-**Resume Bullet:**
-> "Developed bank churn prediction model on 10K customers, identifying credit score and geography as top predictors, achieving 0.76 AUC and 15% precision on high-value customers"
 
 **Download:**
 ```bash
@@ -108,8 +104,6 @@ python scripts/download_real_data.py --source bank
 - ✅ Real subscription data model
 - ✅ Feature engineering opportunity
 
-**Resume Bullet:**
-> "Engineered multi-table SaaS churn prediction system, integrating usage analytics and support data to achieve 0.71 AUC with 12% lift in identifying saveable customers"
 
 **Download:**
 ```bash
@@ -138,12 +132,8 @@ python scripts/download_real_data.py --source saas
 
 **Why Choose This:**
 - ✅ Large dataset (shows scalability)
-- ✅ Academic benchmark (shows research skills)
-- ✅ Production-ready size
+- ✅ Academic benchmark
 - ✅ Many features for feature engineering
-
-**Resume Bullet:**
-> "Scaled churn prediction to 51K telecom customers using XGBoost with feature selection, achieving 0.68 AUC while reducing inference time to <10ms per prediction"
 
 **Download:**
 ```bash
