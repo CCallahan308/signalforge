@@ -76,6 +76,10 @@ def generate(n: int = N_ROWS, seed: int = config.RANDOM_STATE) -> pd.DataFrame:
         }
     )
     df["TotalCharges"] = np.round(df["MonthlyCharges"] * (df["tenure"] + rng.uniform(0, 1, n)), 2)
+    # Mirror the real dataset's blank TotalCharges for tenure==0. Cast to object
+    # first: pandas 3.0 raises (LossySetitemError) when setting a string into a
+    # float column, where pandas 2.x only warned.
+    df["TotalCharges"] = df["TotalCharges"].astype(object)
 
     # Plant a learnable churn signal so the trained model discriminates.
     logit = (
