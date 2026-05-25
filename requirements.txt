@@ -18,4 +18,4 @@ streamlit>=1.57.0,<2.0
 plotly>=5.18.0,<7.0
 
 # Logging (download/quickstart scripts)
-loguru>=0.7.0
+loguru>=0.7.3
