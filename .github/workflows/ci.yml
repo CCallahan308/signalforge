@@ -13,7 +13,7 @@ jobs:
       # Fast Optuna pass for CI; full runs use the default (20).
       SIGNALFORGE_N_TRIALS: "5"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v6
