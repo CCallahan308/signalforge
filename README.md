@@ -3,6 +3,10 @@
 Churn prediction on the IBM Telco Customer Churn dataset (7,043 customers), built to make
 statistically honest model decisions instead of chasing a single accuracy number.
 
+**~$139K/month in charges (~$1.67M/year) sits with customers who go dark.** The selected
+model surfaces ~79% of them with interpretable coefficients, and the dashboard's ROI tab
+turns intervention cost and save-rate assumptions into a what-if estimate.
+
 **[Live demo](https://signalforge-ccallahan308.streamlit.app/)** · **[Project page](https://christiangcallahan.tech/projects/signalforge)** · **[GitHub](https://github.com/CCallahan308/signalforge)**
 
 ## What this is (and isn't)
@@ -151,6 +155,14 @@ signalforge/
 ## Contact
 
 Christian Callahan — [Portfolio](https://christiangcallahan.tech) · [GitHub](https://github.com/CCallahan308)
+
+## Related churn work
+
+Three retention projects, three different questions:
+
+- **This repo** — *which model, and is the difference real?* (bootstrap CIs, paired tests, calibration)
+- [Churn ROI Simulator](https://github.com/CCallahan308/churn-roi-simulator) — *what is a churn score worth in dollars when the base rate caps lift?* (retention-budget ROI simulator)
+- [Ecommerce Retention & Growth](https://github.com/CCallahan308/ecommerce-retention-growth) — *which customers to win back, at what LTV?* (KKBox segmentation)
 
 ## License
 
