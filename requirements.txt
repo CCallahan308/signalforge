@@ -15,7 +15,7 @@ joblib>=1.5.3
 
 # Dashboard
 streamlit>=1.57.0,<2.0
-plotly>=5.18.0,<7.0
+plotly>=7.0.0,<8.0
 
 # Logging (download/quickstart scripts)
 loguru>=0.7.3
